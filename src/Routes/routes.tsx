@@ -7,7 +7,6 @@ import CadUser from "../pages/CadUser/cadUser";
 const Routes = () => {
   return (
     <>
-      <h1>Rota</h1>
       <Switch>
         <Route exact path="/">
           <Login />
