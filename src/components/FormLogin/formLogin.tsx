@@ -10,7 +10,7 @@ const FormLogin = () => {
       <FormInputs>
         <Input placeholder="Email" />
         <Input placeholder="Senha" />
-        <MButton title="Logar" />
+        <MButton>Logar</MButton>
       </FormInputs>
     </Container>
   );
