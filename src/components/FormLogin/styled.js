@@ -10,7 +10,8 @@ export const FormInputs = styled.div`
   display: flex;
   flex-direction: column;
   div,
-  button {
+  button,
+  input {
     margin: 5px 0;
   }
 `;

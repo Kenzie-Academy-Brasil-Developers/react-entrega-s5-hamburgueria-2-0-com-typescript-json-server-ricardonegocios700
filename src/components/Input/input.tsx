@@ -1,18 +1,10 @@
-import { TextField } from "@material-ui/core";
+import { InputHTMLAttributes } from "react";
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
 }
-
 const Input = ({ placeholder, ...rest }: InputProps) => {
-  return (
-    <TextField
-      label={placeholder}
-      variant="outlined"
-      color="primary"
-      {...rest}
-    />
-  );
+  return <input placeholder={placeholder} {...rest} />;
 };
 
 export default Input;

@@ -1,17 +1,13 @@
-import { Button } from "@material-ui/core";
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface MButtonProps {
+interface MButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  onClick: () => void;
 }
 
-const MButton = ({ children, onClick }: MButtonProps) => {
+const MButton = ({ children, ...rest }: MButtonProps) => {
   return (
     <>
-      <Button variant="contained" color="success" onClick={onClick}>
-        {children}
-      </Button>
+      <button {...rest}>{children}</button>
     </>
   );
 };
