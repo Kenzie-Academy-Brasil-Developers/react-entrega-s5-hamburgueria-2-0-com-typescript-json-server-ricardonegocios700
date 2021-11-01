@@ -19,9 +19,11 @@ interface UserLogin {
 }
 interface AuthProviderContext {
   signIn: (userData: UserLogin) => void;
-  authToken: string;
   authorized: boolean;
-  //setAuthorized: () => void;
+  config: object;
+  user: object;
+  //authToken: string;
+  //setAuthToken: () => void;
 }
 interface MyToken {
   email: string;
@@ -51,7 +53,6 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [access, setAccess] = useState<string>("");
   const [config, setConfig] = useState<object>({});
-  const [userId, setUserId] = useState<string>("");
   const [user, setUser] = useState<AtualUser>({} as AtualUser);
 
   useEffect(() => {
@@ -81,20 +82,25 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
     axios
       .get(`https://kenziehamburgers.herokuapp.com/users/${userId}`)
       .then((resp) => {
-        console.log(resp.data);
-        const { name, email, id } = resp.data;
-        setUser({ name, email, id });
+        /*
+          console.log(typeof resp.data.id);
+          const { name, email, id } = resp.data;
+          setUser({ name, email, id });
+        */
+        setUser({
+          id: resp.data.id,
+          name: resp.data.name,
+          email: resp.data.email,
+        });
       })
       .catch((err) => console.log(userId));
   };
-
   useEffect(() => {
     const token = JSON.parse(
       localStorage.getItem("@HaburgueriaQ2:accessToken") || ""
     );
     if (token) {
       const decoded = jwtDecode<MyToken>(token);
-      setUserId(decoded?.sub);
       setConfig({
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -103,7 +109,7 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
   }, [access]);
 
   return (
-    <AuthContext.Provider value={{ signIn, authToken, authorized }}>
+    <AuthContext.Provider value={{ signIn, authorized, config, user }}>
       {children}
     </AuthContext.Provider>
   );
