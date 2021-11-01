@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useAuth } from "../../Providers/Auth/auth";
+
 import { Container, FormInputs } from "./styled";
-import Input from "../Input/input";
+//import Input from "../Input/input";
 import MButton from "../Button/button";
 
 //tipagem
@@ -13,6 +15,7 @@ interface UserData {
 }
 
 const FormLogin = () => {
+  const { signIn } = useAuth();
   const formSchema = yup.object().shape({
     email: yup
       .string()
@@ -31,7 +34,7 @@ const FormLogin = () => {
   } = useForm<UserData>({ resolver: yupResolver(formSchema) });
 
   const onSubmit = (data: UserData) => {
-    console.log(data);
+    signIn(data);
   };
   return (
     <Container>
