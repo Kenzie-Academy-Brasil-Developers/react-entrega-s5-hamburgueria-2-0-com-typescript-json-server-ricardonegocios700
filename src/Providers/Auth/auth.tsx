@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
 
   //get token to local
   const [authToken, setAuthToken] = useState(
-    () => localStorage.getItem("token") || ""
+    () => localStorage.getItem("token") || "{}"
   );
 
   const [authorized, setAuthorized] = useState<boolean>(false);
@@ -96,16 +96,17 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
       .catch((err) => console.log(userId));
   };
   useEffect(() => {
-    const token = JSON.parse(
-      localStorage.getItem("@HaburgueriaQ2:accessToken") || ""
-    );
-    if (token) {
+    const myLocalStorage =
+      localStorage.getItem("@HaburgueriaQ2:accessToken") || "{}";
+    const token = JSON.parse(myLocalStorage);
+    console.log(token);
+    /*if (token) {
       const decoded = jwtDecode<MyToken>(token);
       setConfig({
         headers: { Authorization: `Bearer ${token}` },
       });
       getUsers(decoded?.sub);
-    }
+    }*/
   }, [access]);
 
   return (
