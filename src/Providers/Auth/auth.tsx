@@ -17,25 +17,24 @@ interface UserLogin {
   email: string;
   password: string;
 }
+interface AtualUser {
+  id: number;
+  name: string;
+  email: string;
+}
 interface AuthProviderContext {
   signIn: (userData: UserLogin) => void;
+  setAuthorized: (boolean: boolean) => void;
   authorized: boolean;
   config: object;
-  user: object;
+  user: AtualUser;
   //authToken: string;
-  //setAuthToken: () => void;
 }
 interface MyToken {
   email: string;
   sub: string;
   iat: number;
   exp: number;
-}
-
-interface AtualUser {
-  id: number;
-  name: string;
-  email: string;
 }
 
 const AuthContext = createContext<AuthProviderContext>(
@@ -99,17 +98,21 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
     const myLocalStorage =
       localStorage.getItem("@HaburgueriaQ2:accessToken") || "{}";
     const token = JSON.parse(myLocalStorage);
-    if (token) {
+    if (token !== {}) {
       const decoded = jwtDecode<MyToken>(token);
       setConfig({
         headers: { Authorization: `Bearer ${token}` },
       });
       getUsers(decoded?.sub);
+    } else {
+      console.log("não existe");
     }
   }, [access]);
 
   return (
-    <AuthContext.Provider value={{ signIn, authorized, config, user }}>
+    <AuthContext.Provider
+      value={{ setAuthorized, signIn, authorized, config, user }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,5 +1,8 @@
 import { useProducts } from "../../Providers/Products/products";
 import { useCart } from "../../Providers/Cart/cart";
+import { useAuth } from "../../Providers/Auth/auth";
+import { useHistory } from "react-router";
+import List from "../../components/List/list";
 
 interface ProductData {
   name: string;
@@ -10,8 +13,10 @@ interface ProductData {
   id: number;
 }
 const Products = () => {
+  const history = useHistory();
+  const { setAuthorized, authorized } = useAuth();
   const { products } = useProducts();
-  const { addToCart, removeToCart } = useCart();
+  const { cart, addToCart, removeToCart } = useCart();
 
   const handleClickAdd = (item: ProductData) => {
     addToCart(item);
@@ -21,22 +26,36 @@ const Products = () => {
     removeToCart(item);
   };
 
+  const handleClickLogout = () => {
+    //localStorage.clear();
+    setAuthorized(false);
+    history.push("/");
+  };
+
+  if (!authorized) {
+    history.push("/");
+  }
+
   return (
     <>
-      <h1>Páginas products</h1>
+      <button onClick={handleClickLogout}>Logout</button>
+      <h1>Products</h1>
       {products.map((item) => (
-        <div key={item.id}>
-          {item.image && <img src={item.image} alt={item.name} />}
-          <div>{item.name}</div>
-          <div>{item.description}</div>
-          <div>{item.price}</div>
-          <button className="add" onClick={() => handleClickAdd(item)}>
-            Adicionar
-          </button>
-          <button className="add" onClick={() => handleClickRemove(item)}>
-            RemoveCart
-          </button>
-        </div>
+        <List
+          item={item}
+          handleClickAdd={handleClickAdd}
+          handleClickRemove={handleClickRemove}
+          display="add"
+        />
+      ))}
+      <h1>Cart</h1>
+      {cart.map((item) => (
+        <List
+          item={item}
+          handleClickAdd={handleClickAdd}
+          handleClickRemove={handleClickRemove}
+          display="remove"
+        />
       ))}
     </>
   );

@@ -1,6 +1,12 @@
 import axios from "axios";
 import { useAuth } from "../Auth/auth";
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
 interface Children {
   children: ReactNode;
@@ -15,10 +21,11 @@ interface ProductData {
   id: number;
 }
 interface CartProviderContext {
-  setNewCart: (product: ProductData) => void;
+  //setNewCart: (product: ProductData) => void;
   cart: ProductData[];
   addToCart: (product: ProductData) => void;
   removeToCart: (product: ProductData) => void;
+  getToCart: () => void;
 }
 
 const CartContext = createContext<CartProviderContext>(
@@ -26,29 +33,61 @@ const CartContext = createContext<CartProviderContext>(
 );
 
 export const CartsProvider = ({ children }: Children) => {
-  const { config } = useAuth();
+  const { config, user } = useAuth();
   const [cart, setCart] = useState<ProductData[]>([]);
-  const [newCart, setNewCart] = useState<ProductData>({} as ProductData);
-  console.log("cart: ", cart);
 
-  //const getToCart = () => {}; //TODO axios GET
+  const getToCart = () => {
+    axios
+      .get("https://kenziehamburgers.herokuapp.com/cart", config)
+      .then((resp) => {
+        setCart(resp.data);
+      })
+      .catch((err) => {
+        console.log("Erro: ", err);
+      });
+  };
+  useEffect(() => {
+    getToCart();
+  });
 
   const addToCart = (product: ProductData) => {
     //TODO adicionar pelo axios POST
-    setCart([...cart, product]);
+    axios
+      .post(
+        "https://kenziehamburgers.herokuapp.com/cart",
+        {
+          name: product.name,
+          price: product.price,
+          description: product.description,
+          image: product.image,
+          userId: user.id,
+        },
+        config
+      )
+      .then((resp) => {
+        getToCart();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const removeToCart = (product: ProductData) => {
     axios
-      .post(`https://kenziehamburgers.herokuapp.com/cart/${product.id}`, config)
+      .delete(
+        `https://kenziehamburgers.herokuapp.com/cart/${product.id}`,
+        config
+      )
       .then((resp) => {
-        //TODO buscar resultado pela função getToCart
-        console.log("remover do array", product.id);
+        getToCart();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, setNewCart, removeToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeToCart, getToCart }}>
       {children}
     </CartContext.Provider>
   );
