@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { AuthProvider } from "./Auth/auth";
 import { ProductsProvider } from "./Products/products";
+import { CartsProvider } from "./Cart/cart";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -8,7 +9,9 @@ interface ProvidersProps {
 const Providers = ({ children }: ProvidersProps) => {
   return (
     <AuthProvider>
-      <ProductsProvider>{children}</ProductsProvider>
+      <ProductsProvider>
+        <CartsProvider>{children}</CartsProvider>
+      </ProductsProvider>
     </AuthProvider>
   );
 };

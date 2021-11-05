@@ -99,14 +99,13 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
     const myLocalStorage =
       localStorage.getItem("@HaburgueriaQ2:accessToken") || "{}";
     const token = JSON.parse(myLocalStorage);
-    console.log(token);
-    /*if (token) {
+    if (token) {
       const decoded = jwtDecode<MyToken>(token);
       setConfig({
         headers: { Authorization: `Bearer ${token}` },
       });
       getUsers(decoded?.sub);
-    }*/
+    }
   }, [access]);
 
   return (

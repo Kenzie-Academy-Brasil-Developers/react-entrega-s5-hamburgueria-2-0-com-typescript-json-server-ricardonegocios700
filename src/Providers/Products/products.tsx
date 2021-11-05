@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
 import axios from "axios";
 import { useAuth } from "../Auth/auth";
@@ -19,6 +25,7 @@ interface ProductData {
 interface ProductsProviderContext {
   products: ProductData[];
   config: object;
+  getProducts: () => void;
 }
 
 const ProductsContext = createContext<ProductsProviderContext>(
@@ -30,15 +37,19 @@ export const ProductsProvider = ({ children }: Children) => {
 
   const [products, setProducts] = useState<ProductData[]>([] as ProductData[]);
 
-  /*  const getProducts = () => {
+  const getProducts = () => {
     axios
       .get("https://kenziehamburgers.herokuapp.com/products", config)
       .then((response) => setProducts(response.data))
       .catch((error) => console.log("Erro: ", error));
   };
-*/
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
-    <ProductsContext.Provider value={{ config, products }}>
+    <ProductsContext.Provider value={{ config, products, getProducts }}>
       {children}
     </ProductsContext.Provider>
   );
