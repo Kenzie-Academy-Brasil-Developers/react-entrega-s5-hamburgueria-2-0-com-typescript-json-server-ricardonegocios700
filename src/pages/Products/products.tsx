@@ -2,6 +2,8 @@ import { useProducts } from "../../Providers/Products/products";
 import { useCart } from "../../Providers/Cart/cart";
 import { useAuth } from "../../Providers/Auth/auth";
 import { useHistory } from "react-router";
+
+import SearchProd from "../../components/SerchProd/searchProd";
 import List from "../../components/List/list";
 
 interface ProductData {
@@ -39,6 +41,7 @@ const Products = () => {
   return (
     <>
       <button onClick={handleClickLogout}>Logout</button>
+      <SearchProd />
       <h1>Products</h1>
       {products.map((item) => (
         <List

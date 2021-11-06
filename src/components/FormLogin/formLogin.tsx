@@ -1,14 +1,12 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Container, FormInputs } from "./styled";
 
 import { useAuth } from "../../Providers/Auth/auth";
 
-import { Container, FormInputs } from "./styled";
-//import Input from "../Input/input";
 import MButton from "../Button/button";
 
-//tipagem
 interface UserData {
   email: string;
   password: string;
