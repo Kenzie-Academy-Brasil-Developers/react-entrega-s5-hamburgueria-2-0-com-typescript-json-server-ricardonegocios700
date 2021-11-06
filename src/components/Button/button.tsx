@@ -4,12 +4,14 @@ import { Button } from "./style";
 
 interface MButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
+  buttonCor?: string;
+  fontCor?: string;
 }
 
-const MButton = ({ children, ...rest }: MButtonProps) => {
+const MButton = ({ children, buttonCor, fontCor, ...rest }: MButtonProps) => {
   return (
-    <Button>
-      <button {...rest}>{children}</button>
+    <Button {...rest} buttonCor={buttonCor} fontCor={fontCor}>
+      {children}
     </Button>
   );
 };
