@@ -2,10 +2,13 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Container, FormInputs } from "./styled";
+import { TextField, Box } from "@material-ui/core";
 
 import { useAuth } from "../../Providers/Auth/auth";
 
+// não funciona:
 import MButton from "../Button/button";
+//import MInput from "../MInput/minput";
 
 interface UserData {
   email: string;
@@ -36,20 +39,29 @@ const FormLogin = () => {
   };
   return (
     <Container>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h3>Login</h3>
-        <FormInputs>
-          <input placeholder="Email" {...register("email")} />
-          {errors.email?.message}
-          <input
-            placeholder="Password"
-            type="password"
-            {...register("password")}
-          />
-          {errors.password?.message}
-          <MButton type="submit">MButton</MButton>
-        </FormInputs>
-      </form>
+      <Box>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h3>Login</h3>
+          <FormInputs>
+            <TextField
+              label="Email"
+              variant="outlined"
+              size="small"
+              {...register("email")}
+            />
+            {errors.email?.message}
+            <TextField
+              label="Password"
+              variant="outlined"
+              type="password"
+              size="small"
+              {...register("password")}
+            />
+            {errors.password?.message}
+            <MButton type="submit">MButton</MButton>
+          </FormInputs>
+        </form>
+      </Box>
     </Container>
   );
 };
