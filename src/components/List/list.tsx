@@ -1,5 +1,4 @@
 import { Container } from "./styled";
-import { useState } from "react";
 
 interface ProductData {
   name: string;
