@@ -1,13 +1,11 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TextField, Box } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router";
-
 import { ContainerSection, FormInputs } from "./styled";
 import { useAuth } from "../../Providers/Auth/auth";
 import MButton from "../Button/button";
-import imgLogin from "../../assets/img/imgLogin.png";
 
 // não funciona:
 //import MInput from "../MInput/minput";
@@ -65,13 +63,23 @@ const FormLogin = () => {
                 {...register("password")}
               />
               {errors.password?.message}
-              <MButton type="submit" buttonCor="#219653" fontCor="#ffffff">
+              <MButton
+                type="submit"
+                size="large"
+                buttonCor="#219653"
+                fontCor="#ffffff"
+              >
                 Logar
               </MButton>
             </FormInputs>
           </form>
           <p>Crie sua conta para saborear muitas delícias e matar sua fome!</p>
-          <MButton onClick={handleClick} buttonCor="#F5F5F5" fontCor="#999999">
+          <MButton
+            onClick={handleClick}
+            size="large"
+            buttonCor="#F5F5F5"
+            fontCor="#999999"
+          >
             Cadastrar
           </MButton>
         </div>

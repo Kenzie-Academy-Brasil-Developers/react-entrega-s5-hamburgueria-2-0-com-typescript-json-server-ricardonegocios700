@@ -1,7 +1,8 @@
+import FormCadUser from "../../components/FormCadUser/formCadUser";
 const CadUser = () => {
   return (
     <>
-      <h1>Página CadUser</h1>
+      <FormCadUser />
     </>
   );
 };

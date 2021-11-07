@@ -3,8 +3,9 @@ import { useCart } from "../../Providers/Cart/cart";
 import { useAuth } from "../../Providers/Auth/auth";
 import { useHistory } from "react-router";
 
-import SearchProd from "../../components/SerchProd/searchProd";
+import SearchProd from "../../components/SearchProd/searchProd";
 import List from "../../components/List/list";
+import { Container } from "./styled";
 
 interface ProductData {
   name: string;
@@ -43,23 +44,27 @@ const Products = () => {
       <button onClick={handleClickLogout}>Logout</button>
       <SearchProd />
       <h1>Products</h1>
-      {products.map((item) => (
-        <List
-          item={item}
-          handleClickAdd={handleClickAdd}
-          handleClickRemove={handleClickRemove}
-          display="add"
-        />
-      ))}
+      <Container>
+        {products.map((item) => (
+          <List
+            item={item}
+            handleClickAdd={handleClickAdd}
+            handleClickRemove={handleClickRemove}
+            display="add"
+          />
+        ))}
+      </Container>
       <h1>Cart</h1>
-      {cart.map((item) => (
-        <List
-          item={item}
-          handleClickAdd={handleClickAdd}
-          handleClickRemove={handleClickRemove}
-          display="remove"
-        />
-      ))}
+      <Container>
+        {cart.map((item) => (
+          <List
+            item={item}
+            handleClickAdd={handleClickAdd}
+            handleClickRemove={handleClickRemove}
+            display="remove"
+          />
+        ))}
+      </Container>
     </>
   );
 };

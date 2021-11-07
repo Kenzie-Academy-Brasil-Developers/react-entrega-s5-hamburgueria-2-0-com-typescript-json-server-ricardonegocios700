@@ -1,3 +1,5 @@
+import { Container } from "./styled";
+
 interface ProductData {
   name: string;
   price: string;
@@ -20,10 +22,10 @@ const List = ({
   handleClickAdd,
 }: ListProps) => {
   return (
-    <div key={item.id}>
-      {item.image && <img src={item.image} alt={item.name} />}
+    <Container key={item.id}>
+      {item.image && <img src={item.image} alt={item.name} width="80px" />}
       <div>{item.name}</div>
-      <div>{item.description}</div>
+      <div className="description">{item.description}</div>
       <div>{item.price}</div>
       {display === "add" && (
         <button className="add" onClick={() => handleClickAdd(item)}>
@@ -35,7 +37,7 @@ const List = ({
           RemoveCart
         </button>
       )}
-    </div>
+    </Container>
   );
 };
 

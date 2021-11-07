@@ -6,11 +6,19 @@ interface MButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   buttonCor?: string;
   fontCor?: string;
+  size?: string;
 }
 
-const MButton = ({ children, buttonCor, fontCor, ...rest }: MButtonProps) => {
+const MButton = ({
+  //size = "large",
+  size,
+  children,
+  buttonCor,
+  fontCor,
+  ...rest
+}: MButtonProps) => {
   return (
-    <Button {...rest} buttonCor={buttonCor} fontCor={fontCor}>
+    <Button {...rest} buttonCor={buttonCor} fontCor={fontCor} size={size}>
       {children}
     </Button>
   );
