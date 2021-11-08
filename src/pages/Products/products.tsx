@@ -33,7 +33,7 @@ interface ProductData {
 const Products = () => {
   const history = useHistory();
   const { setAuthorized, authorized } = useAuth();
-  const { products } = useProducts();
+  const { products, product } = useProducts();
   const { cart, addToCart, removeToCart } = useCart();
 
   const handleClickAdd = (item: ProductData) => {
@@ -53,16 +53,21 @@ const Products = () => {
   if (!authorized) {
     history.push("/");
   }
-  const [open, setOpen] = useState<boolean>(false);
-  const handleClose = () => setOpen(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const [openCart, setOpenCart] = useState<boolean>(false);
+  const handleCloseCart = () => setOpenCart(false);
+  const handleOpenCart = () => {
+    setOpenCart(true);
+  };
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
+  const handleCloseSearch = () => setOpenSearch(false);
+  const handleOpenSearch = () => {
+    setOpenSearch(true);
   };
   return (
     <>
-      <button onClick={handleOpen}>Abrir modal</button>
+      <button onClick={handleOpenCart}>Cart</button>
       <button onClick={handleClickLogout}>Logout</button>
-      <SearchProd />
+      <SearchProd handleOpenSearch={handleOpenSearch} />
       <h1>Products</h1>
       <Container>
         {products.map((item) => (
@@ -75,8 +80,8 @@ const Products = () => {
         ))}
       </Container>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openCart}
+        onClose={handleCloseCart}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -89,6 +94,26 @@ const Products = () => {
                 handleClickAdd={handleClickAdd}
                 handleClickRemove={handleClickRemove}
                 display="remove"
+              />
+            ))}
+          </Container>
+        </Box>
+      </Modal>
+      <Modal
+        open={openSearch}
+        onClose={handleCloseSearch}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <h1>Search</h1>
+          <Container>
+            {product.map((item) => (
+              <List
+                item={item}
+                handleClickAdd={handleClickAdd}
+                handleClickRemove={handleClickRemove}
+                display="add"
               />
             ))}
           </Container>

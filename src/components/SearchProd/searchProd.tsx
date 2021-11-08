@@ -4,12 +4,16 @@ import { TextField } from "@material-ui/core";
 import MButton from "../Button/button";
 import { Container } from "./styled";
 
-const SearchProd = () => {
+interface searchProps {
+  handleOpenSearch: () => void;
+}
+const SearchProd = ({ handleOpenSearch }: searchProps) => {
   const { getProduct } = useProducts();
   const [search, setSearch] = useState<string>("");
 
   const handleClick = () => {
     getProduct(search);
+    handleOpenSearch();
   };
 
   return (

@@ -24,10 +24,10 @@ interface ProductData {
 
 interface ProductsProviderContext {
   products: ProductData[];
-  product: ProductData;
+  product: ProductData[];
   config: object;
   getProducts: () => void;
-  getProduct: (name: string) => void;
+  getProduct: (name: any) => void;
 }
 
 const ProductsContext = createContext<ProductsProviderContext>(
@@ -38,7 +38,7 @@ export const ProductsProvider = ({ children }: Children) => {
   const { config } = useAuth();
 
   const [products, setProducts] = useState<ProductData[]>([] as ProductData[]);
-  const [product, setProduct] = useState<ProductData>({} as ProductData);
+  const [product, setProduct] = useState<ProductData[]>([] as ProductData[]);
 
   const getProducts = () => {
     axios
@@ -53,7 +53,7 @@ export const ProductsProvider = ({ children }: Children) => {
         `https://kenziehamburgers.herokuapp.com/products?name=${name}`,
         config
       )
-      .then((response) => setProduct(response.data[0]))
+      .then((response) => setProduct(response.data))
       .catch((error) => console.log("Erro: ", error));
   };
 
