@@ -98,7 +98,7 @@ export const AuthProvider = ({ children }: AuthProviderData) => {
     const myLocalStorage =
       localStorage.getItem("@HaburgueriaQ2:accessToken") || "{}";
     const token = JSON.parse(myLocalStorage);
-    if (token !== {}) {
+    if (JSON.stringify(token) !== JSON.stringify({})) {
       const decoded = jwtDecode<MyToken>(token);
       setConfig({
         headers: { Authorization: `Bearer ${token}` },
