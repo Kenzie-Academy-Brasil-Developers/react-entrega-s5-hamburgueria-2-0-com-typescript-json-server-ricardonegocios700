@@ -40,7 +40,7 @@ export const CartsProvider = ({ children }: Children) => {
     axios
       .get("https://kenziehamburgers.herokuapp.com/cart", config)
       .then((resp) => {
-        setCart(resp.data);
+        resp && setCart(resp.data);
       })
       .catch((err) => {
         console.log("Erro: ", err);
